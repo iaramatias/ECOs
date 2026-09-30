@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECOs: Ressoando Memórias e Afetos</title>
+<meta name="description" content="O ECOs acolhe idosos com Alzheimer e perda de memória por meio de conversas por voz com IA, usando a voz de quem eles amam. Projeto Integrador UNINASSAU Aracaju.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:opsz,wght@7..72,500;7..72,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12263F; --ink-2:#3B4F66; --teal:#2A7F9E; --teal-d:#1D6783; --sky:#D6EBF4; --mist:#F2F8FB;
+  --sun:#F0B94A; --line:#C9DCE6; --white:#fff;
+  --serif:"Literata",Georgia,"Times New Roman",serif;
+  --sans:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{font-family:var(--sans);font-size:18px;line-height:1.65;color:var(--ink);background:var(--white)}
+img,svg{max-width:100%}
+a{color:var(--teal-d)}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:4px}
+.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+section{padding:88px 0}
+h1,h2,h3{font-family:var(--serif);line-height:1.2;color:var(--ink)}
+h1{font-size:clamp(2.3rem,5.4vw,3.8rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.8rem,3.6vw,2.5rem);margin-bottom:14px}
+h3{font-size:1.25rem;margin-bottom:6px}
+.lead{font-size:1.2rem;color:var(--ink-2);max-width:62ch}
+.btn{display:inline-block;padding:15px 28px;border-radius:999px;font-weight:700;text-decoration:none;font-size:1.05rem;border:2px solid transparent;cursor:pointer;font-family:inherit;transition:background .2s,transform .2s}
+.btn-sun{background:var(--sun);color:var(--ink)}
+.btn-sun:hover{background:#f5c766;transform:translateY(-2px)}
+.btn-line{border-color:var(--ink);color:var(--ink);background:transparent}
+.btn-line:hover{background:var(--ink);color:var(--white)}
+
+/* topo */
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+.brand{font-family:var(--serif);font-weight:700;font-size:1.6rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}
+.brand svg{width:30px;height:30px}
+nav ul{display:flex;gap:26px;list-style:none;padding:0}
+nav a{color:var(--ink-2);text-decoration:none;font-weight:700;font-size:.98rem}
+nav a:hover{color:var(--teal-d)}
+.bar .btn{padding:10px 20px;font-size:.98rem}
+
+/* hero */
+.hero{background:linear-gradient(180deg,var(--mist),var(--white));padding:72px 0 96px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.badge{display:inline-block;background:var(--sky);color:var(--ink);padding:6px 14px;border-radius:999px;font-size:.92rem;font-weight:700;margin-bottom:22px}
+.hero h1{margin-bottom:22px}
+.hero .lead{margin-bottom:32px}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px}
+.trust{margin-top:30px;font-size:.95rem;color:var(--ink-2)}
+.stage{position:relative;display:grid;place-items:center;min-height:520px}
+.rings{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.rings i{position:absolute;width:260px;height:260px;border-radius:50%;border:2px solid var(--teal);opacity:0;animation:ring 5s ease-out infinite}
+.rings i:nth-child(2){animation-delay:1.25s}.rings i:nth-child(3){animation-delay:2.5s}.rings i:nth-child(4){animation-delay:3.75s}
+@keyframes ring{0%{transform:scale(.6);opacity:.55}100%{transform:scale(2.1);opacity:0}}
+.phone{position:relative;width:290px;background:var(--ink);border-radius:38px;padding:14px;box-shadow:0 30px 60px -20px rgba(18,38,63,.45)}
+.screen{background:#fff;border-radius:26px;padding:18px 14px 20px;min-height:440px;display:flex;flex-direction:column;gap:12px}
+.call{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.avatar{width:42px;height:42px;border-radius:50%;background:var(--sun);display:grid;place-items:center;font-weight:700}
+.call b{display:block;font-size:.95rem;line-height:1.2}.call small{color:var(--ink-2);font-size:.8rem}
+.msg{padding:11px 14px;border-radius:18px;font-size:.92rem;line-height:1.45;max-width:88%}
+.me{background:var(--mist);align-self:flex-end;border-bottom-right-radius:4px}
+.voice{background:var(--ink);color:#fff;border-bottom-left-radius:4px}
+.wave{display:flex;gap:3px;align-items:center;height:22px;margin-bottom:6px}
+.wave s{display:block;width:3px;background:var(--sun);border-radius:2px;animation:eq 1.2s ease-in-out infinite}
+.wave s:nth-child(1){height:8px}.wave s:nth-child(2){height:16px;animation-delay:.1s}.wave s:nth-child(3){height:22px;animation-delay:.2s}.wave s:nth-child(4){height:12px;animation-delay:.3s}.wave s:nth-child(5){height:18px;animation-delay:.4s}.wave s:nth-child(6){height:9px;animation-delay:.5s}
+@keyframes eq{50%{transform:scaleY(.45)}}
+.ex{margin-top:auto;text-align:center;font-size:.75rem;color:var(--ink-2)}
+
+/* problema */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:44px;border-top:2px solid var(--ink)}
+.stat{padding:26px 28px 6px 0}
+.stat+.stat{padding-left:28px;border-left:1px solid var(--line)}
+.stat b{display:block;font-family:var(--serif);font-size:2.6rem;line-height:1.1;color:var(--teal-d)}
+.stat span{color:var(--ink-2)}
+.src{font-size:.85rem;color:var(--ink-2);margin-top:22px}
+.pain{margin-top:52px;display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.pain p{font-size:1.05rem}
+
+/* como funciona */
+.steps-bg{background:var(--ink);color:#fff}
+.steps-bg h2,.steps-bg h3{color:#fff}.steps-bg .lead{color:#C8D8E6}
+.steps{list-style:none;padding:0;margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;counter-reset:s}
+.steps li{position:relative;padding:0 32px 0 0;counter-increment:s}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--sun);color:var(--ink);font-weight:700;font-family:var(--serif);margin-bottom:18px}
+.steps li::after{content:"";position:absolute;top:22px;left:58px;right:12px;height:2px;background:rgba(255,255,255,.25)}
+.steps li:last-child::after{display:none}
+.steps p{color:#C8D8E6}
+.feats{margin-top:72px;display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.feat{border:1px solid rgba(255,255,255,.22);border-radius:16px;padding:26px}
+.feat p{color:#C8D8E6;font-size:1rem}
+
+/* público */
+.audience{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:28px;margin-top:40px}
+.aud{padding-top:18px;border-top:4px solid var(--teal)}
+.aud:nth-child(2){border-color:var(--sun)}.aud:nth-child(3){border-color:var(--ink)}
+.aud p{font-size:1rem;color:var(--ink-2)}
+.aud ul{padding-left:20px;margin-top:8px;color:var(--ink-2);font-size:1rem}
+
+/* planos */
+.plans-bg{background:var(--mist)}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px;align-items:stretch}
+.plan{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px;display:flex;flex-direction:column}
+.plan.hl{border:3px solid var(--teal);position:relative;box-shadow:0 18px 40px -22px rgba(42,127,158,.6)}
+.plan.hl::before{content:"Mais escolhido pelas famílias";position:absolute;top:-15px;left:24px;background:var(--sun);font-size:.82rem;font-weight:700;padding:3px 12px;border-radius:999px}
+.price{font-family:var(--serif);font-size:2.2rem;font-weight:700;margin:10px 0 4px}
+.price small{font-size:1rem;font-weight:400;font-family:var(--sans);color:var(--ink-2)}
+.plan ul{list-style:none;padding:0;margin:18px 0 24px;flex:1}
+.plan li{padding:7px 0 7px 28px;position:relative;font-size:1rem}
+.plan li::before{content:"";position:absolute;left:0;top:14px;width:14px;height:8px;border-left:3px solid var(--teal);border-bottom:3px solid var(--teal);transform:rotate(-45deg)}
+.plan .btn{text-align:center}
+.note{font-size:.88rem;color:var(--ink-2);margin-top:20px}
+
+/* roadmap */
+.road{margin-top:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-left:3px solid var(--teal)}
+.rel{padding:0 0 0 26px;position:relative}
+.rel::before{content:"";position:absolute;left:-10px;top:4px;width:17px;height:17px;border-radius:50%;background:var(--sun);border:3px solid var(--white);box-shadow:0 0 0 2px var(--teal)}
+.rel small{font-weight:700;color:var(--teal-d)}
+.rel ul{padding-left:18px;margin-top:8px;color:var(--ink-2);font-size:1rem}
+
+/* equipe / governança */
+.team{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+.person{display:flex;gap:16px;align-items:flex-start}
+.person .av{flex:none;width:60px;height:60px;border-radius:50%;background:var(--sky);display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:1.3rem;color:var(--ink)}
+.person.lead .av{background:var(--sun)}
+.person p{font-size:.98rem;color:var(--ink-2)}
+.tag{display:inline-block;font-size:.8rem;font-weight:700;background:var(--sun);padding:2px 10px;border-radius:999px;margin-bottom:4px}
+.gov{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:64px}
+.gov ul{padding-left:20px;color:var(--ink-2);font-size:1rem}
+.gov li{margin-bottom:8px}
+.gov-h{margin-bottom:10px}
+.lgpd{background:var(--mist);border-radius:18px;padding:28px}
+
+/* faq + contato */
+details{border-bottom:1px solid var(--line);padding:18px 0}
+summary{cursor:pointer;font-weight:700;font-size:1.1rem}
+details p{margin-top:10px;color:var(--ink-2)}
+.contact{background:var(--ink);color:#fff}
+.contact h2{color:#fff}.contact .lead{color:#C8D8E6}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+form{background:#fff;color:var(--ink);border-radius:18px;padding:30px;display:grid;gap:16px}
+label{font-weight:700;font-size:.98rem;display:grid;gap:6px}
+input,select,textarea{font:inherit;padding:13px 14px;border:2px solid var(--line);border-radius:10px;color:var(--ink);background:#fff}
+input:focus,select:focus,textarea:focus{border-color:var(--teal);outline:none}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:.92rem;color:var(--ink-2)}
+.check input{width:22px;height:22px;flex:none;margin-top:3px;accent-color:var(--teal)}
+.err{color:#B3261E;font-size:.9rem;min-height:1.2em}
+.ok{display:none;background:#E3F4EA;border-radius:10px;padding:16px;font-weight:700}
+footer{background:#0C1B2E;color:#AFC2D3;padding:40px 0;font-size:.92rem}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px}
+footer b{color:#fff}
+
+@media (max-width:900px){
+  nav{display:none}
+  section{padding:64px 0}
+  .hero-grid,.cgrid,.gov,.pain{grid-template-columns:1fr}
+  .stage{min-height:480px}
+  .stats,.steps,.feats,.audience,.plans,.road,.team{grid-template-columns:1fr}
+  .stat+.stat{border-left:0;padding-left:0;border-top:1px solid var(--line)}
+  .steps li{padding:0 0 28px 64px}.steps li::before{position:absolute;left:0;top:0;margin:0}
+  .steps li::after{left:22px;right:auto;top:48px;bottom:0;width:2px;height:auto}
+  .road{gap:30px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important;transition:none!important}.rings i{opacity:.25}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#topo" aria-label="ECOs, página inicial">
+      <svg viewBox="0 0 32 32" fill="none" stroke="#2A7F9E" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="16" cy="16" r="3.2" fill="#F0B94A" stroke="none"/><path d="M9.5 9.5a9.2 9.2 0 0 0 0 13M22.5 9.5a9.2 9.2 0 0 1 0 13"/><path d="M4.5 4.5a16 16 0 0 0 0 23M27.5 4.5a16 16 0 0 1 0 23" opacity=".55"/></svg>
+      ECOs
+    </a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="#problema">O problema</a></li>
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#publico">Para quem</a></li>
+        <li><a href="#planos">Planos</a></li>
+        <li><a href="#equipe">Equipe</a></li>
+        <li><a href="#governanca">Governança</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-sun" href="#contato">Quero participar</a>
+  </div>
+</header>
+
+<main id="topo">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="badge">Projeto Integrador de Silver Economy e HealthTech</span>
+      <h1>Quando a memória falha, o afeto continua presente.</h1>
+      <p class="lead">O ECOs acolhe idosos com Alzheimer e perda de memória por meio de conversas por voz com inteligência artificial. Quando eles perguntam por quem já partiu, a resposta vem com a voz de quem eles amam, com carinho e sem choque.</p>
+      <div class="cta-row">
+        <a class="btn btn-sun" href="#contato">Entrar na lista de espera</a>
+        <a class="btn btn-line" href="#como-funciona">Ver como funciona</a>
+      </div>
+      <p class="trust">Desenvolvido por estudantes da UNINASSAU Aracaju, com foco na população 50+ de Sergipe.</p>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="rings"><i></i><i></i><i></i><i></i></div>
+      <div class="phone">
+        <div class="screen">
+          <div class="call"><div class="avatar">A</div><div><b>Chamada com Antônio</b><small>Voz criada com autorização da família</small></div></div>
+          <div class="msg me">Cadê o Antônio? Ele já voltou do roçado?</div>
+          <div class="msg voice"><div class="wave"><s></s><s></s><s></s><s></s><s></s><s></s></div>Estou aqui com você, Lúcia. Lembra do nosso São João na praia? Você dançou a noite toda.</div>
+          <div class="msg me">Dancei mesmo! Foi bonito.</div>
+          <div class="ex">Exemplo ilustrativo de conversa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="problema">
+  <div class="wrap">
+    <h2>Perguntar pelo marido que já morreu e sofrer a perda de novo, todos os dias</h2>
+    <p class="lead">Em idosos com Alzheimer, o luto pode voltar como se fosse a primeira vez. Isso gera ansiedade e desorientação, e sobrecarrega quem cuida.</p>
+    <div class="stats">
+      <div class="stat"><b>32,1 milhões</b><span>de brasileiros têm 60 anos ou mais, ou 15,8% da população.</span></div>
+      <div class="stat"><b>13,3%</b><span>da população de Sergipe é idosa, cerca de 294 mil pessoas. O índice de envelhecimento quase dobrou em 12 anos.</span></div>
+      <div class="stat"><b>1,76 milhão</b><span>de idosos vivem com alguma forma de demência no Brasil, e o número deve crescer.</span></div>
+    </div>
+    <p class="src">Fontes: IBGE, Censo Demográfico 2022; Revista Pesquisa FAPESP. A estimativa de 294 mil idosos em Sergipe é cálculo da equipe.</p>
+    <div class="pain">
+      <p><strong>Para o idoso:</strong> corrigir a pessoa com a verdade dolorosa, repetidas vezes, é cruel. O que ajuda é validar o sentimento e conduzir a conversa para lembranças boas.</p>
+      <p><strong>Para a família:</strong> cuidar cansa. Faltam ferramentas que acolham o idoso nos momentos em que ninguém pode estar ao lado dele.</p>
+    </div>
+  </div>
+</section>
+
+<section id="como-funciona" class="steps-bg">
+  <div class="wrap">
+    <h2>Como o ECOs funciona</h2>
+    <p class="lead">A família prepara o afeto. A tecnologia cuida do momento da conversa.</p>
+    <ol class="steps">
+      <li><h3>A família cadastra</h3><p>No painel web, filhos e cuidadores registram histórias, memórias felizes, pessoas queridas e áudios do ente querido, com consentimento explícito.</p></li>
+      <li><h3>A IA conversa com empatia</h3><p>O idoso fala ao aplicativo. A fala vira texto, e a IA responde usando o contexto da família, sem inventar e sem confrontar.</p></li>
+      <li><h3>O idoso é acolhido</h3><p>A resposta é tocada com a voz sintética do ente querido, que valida o sentimento e leva a conversa para uma lembrança boa.</p></li>
+    </ol>
+    <div class="feats">
+      <div class="feat"><h3>Aplicativo feito para o idoso</h3><p>Alto contraste, botões grandes e navegação simples. Uma chamada por voz, sem menus difíceis.</p></div>
+      <div class="feat"><h3>Painel para a família</h3><p>Cadastro do idoso, da árvore familiar, das memórias e dos áudios, em uma tela web clara e segura.</p></div>
+      <div class="feat"><h3>IA com propósito</h3><p>Um modelo de linguagem conduz o diálogo e a síntese de voz reproduz a voz do ente querido. A IA existe para acolher, e não para entreter.</p></div>
+      <div class="feat"><h3>Privacidade desde o início</h3><p>Áudios e dados criptografados, uso exclusivo para a voz do ECOs e exclusão definitiva a pedido da família.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="publico">
+  <div class="wrap">
+    <h2>Para quem o ECOs foi criado</h2>
+    <p class="lead">Quem usa o aplicativo, quem decide e quem pode levar a solução para mais pessoas.</p>
+    <div class="audience">
+      <div class="aud"><h3>Público final: idosos 50+</h3><p>Pessoas com 50 anos ou mais em fase inicial de declínio cognitivo ou com Alzheimer, em Sergipe, que sofrem com ansiedade, solidão e a dor do luto recorrente.</p></div>
+      <div class="aud"><h3>Quem decide: famílias</h3><p>Filhos, netos e cuidadores responsáveis pela rotina do idoso, que cadastram as memórias e acompanham o bem-estar.</p></div>
+      <div class="aud"><h3>Parceiros</h3><ul><li>Casas de repouso e ILPIs</li><li>Clínicas geriátricas</li><li>Associações de apoio ao idoso</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="planos" class="plans-bg">
+  <div class="wrap">
+    <h2>Comece sem custo e evolua quando fizer sentido</h2>
+    <p class="lead">Um modelo simples para famílias e um pacote para instituições.</p>
+    <div class="plans">
+      <div class="plan"><h3>Gratuito</h3><div class="price">R$ 0</div><ul><li>Aplicativo do idoso com chamadas por voz básicas</li><li>Cadastro limitado de memórias</li><li>Painel web da família</li></ul><a class="btn btn-line" href="#contato">Quero testar</a></div>
+      <div class="plan hl"><h3>Premium</h3><div class="price">R$ 39,90 <small>por mês</small></div><ul><li>Voz do ente querido (clonagem vocal)</li><li>Armazenamento ilimitado de áudios e histórias</li><li>Relatórios de uso para os responsáveis</li></ul><a class="btn btn-sun" href="#contato">Quero o Premium</a></div>
+      <div class="plan"><h3>Instituições</h3><div class="price">Sob consulta</div><ul><li>Gestão do bem-estar de vários residentes</li><li>Para ILPIs, casas de repouso e clínicas</li><li>Acompanhamento por equipe profissional</li></ul><a class="btn btn-line" href="#contato">Falar com a equipe</a></div>
+    </div>
+    <p class="note">Valores previstos para o lançamento comercial, ainda em validação com famílias e instituições. O ECOs é um projeto acadêmico em desenvolvimento.</p>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap">
+    <h2>O que vem por aí</h2>
+    <p class="lead">O produto evolui em três etapas, do acolhimento por voz ao acompanhamento clínico.</p>
+    <div class="road">
+      <div class="rel"><small>Novembro de 2026</small><h3>Release 1: MVP</h3><ul><li>Painel web para a família</li><li>Aplicativo mobile para o idoso</li><li>IA conversacional e voz sintética</li></ul></div>
+      <div class="rel"><small>1º semestre de 2027</small><h3>Release 2: Acompanhamento</h3><ul><li>Dashboard do cuidador</li><li>Análise de sentimento com alertas</li><li>Recados de voz de familiares vivos</li></ul></div>
+      <div class="rel"><small>2º semestre de 2027</small><h3>Release 3: Saúde geriátrica</h3><ul><li>Módulo para clínicas e asilos</li><li>Detecção de quedas com wearables</li><li>Relatórios clínicos em PDF</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="equipe" class="plans-bg">
+  <div class="wrap">
+    <h2>Quem está por trás do ECOs</h2>
+    <p class="lead">Três estudantes de Análise e Desenvolvimento de Sistemas da UNINASSAU Aracaju.</p>
+    <div class="team">
+      <div class="person lead"><div class="av">IM</div><div><span class="tag">Líder do projeto</span><h3>Iara dos Santos Matias</h3><p>Full Stack Lead. Gestão do projeto, back-end em Java (Spring Boot) e banco de dados.</p></div></div>
+      <div class="person"><div class="av">ML</div><div><h3>Maria Luiza Almeida de Jesus</h3><p>Front-end e UX/UI. Interface web em React e design mobile acessível para idosos.</p></div></div>
+      <div class="person"><div class="av">DA</div><div><h3>Daniel Fernando da Massena Arévalo</h3><p>Mobile e IA. Aplicativo em React Native ou Flutter e integração com as APIs de IA.</p></div></div>
+    </div>
+
+    <div class="gov" id="governanca">
+      <div>
+        <h2 class="gov-h">Política de governança</h2>
+        <p class="lead" style="font-size:1.05rem;margin-bottom:16px">Como a equipe organiza o trabalho para entregar com qualidade e no prazo.</p>
+        <ul>
+          <li><strong>Papéis definidos:</strong> cada integrante responde por uma frente, e a líder centraliza a comunicação com a coordenação.</li>
+          <li><strong>Controle de versão no GitHub:</strong> branches <em>main</em>, <em>develop</em> e <em>feature</em>, com revisão obrigatória por Pull Request antes de cada merge.</li>
+          <li><strong>Gestão ágil no Trello:</strong> quadro Kanban com Backlog, A Fazer, Em Andamento, Em Testes e Concluído.</li>
+          <li><strong>Alinhamento contínuo:</strong> reuniões rápidas e periódicas para acompanhar prazos e o roadmap.</li>
+        </ul>
+      </div>
+      <div class="lgpd">
+        <h3>Compromisso com a LGPD</h3>
+        <p style="margin-bottom:10px;color:var(--ink-2);font-size:1rem">Lidamos com dados sensíveis e com a voz de pessoas queridas. Por isso:</p>
+        <ul>
+          <li><strong>Consentimento explícito</strong> do responsável legal antes de qualquer upload.</li>
+          <li><strong>Criptografia</strong> dos áudios e dos dados, em repouso e em trânsito.</li>
+          <li><strong>Uso exclusivo:</strong> os áudios servem só para gerar a voz dentro do ECOs.</li>
+          <li><strong>Direito ao esquecimento:</strong> a família pode apagar perfil, conversas e áudios quando quiser.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap" style="max-width:820px">
+    <h2>Perguntas frequentes</h2>
+    <details><summary>O ECOs substitui o cuidador ou o acompanhamento médico?</summary><p>Não. O ECOs é um apoio emocional complementar. Ele não faz diagnóstico nem substitui médicos, geriatras ou cuidadores.</p></details>
+    <details><summary>É ético usar a voz de quem já faleceu?</summary><p>Levamos isso a sério. A voz só é criada com autorização clara da família, é usada exclusivamente dentro do ECOs e pode ser apagada a qualquer momento.</p></details>
+    <details><summary>A IA mente para o idoso?</summary><p>A IA foi pensada para validar os sentimentos e conduzir a conversa para memórias felizes cadastradas pela família, evitando confrontos dolorosos.</p></details>
+    <details><summary>O aplicativo já está disponível?</summary><p>O ECOs está em desenvolvimento como projeto acadêmico, com o MVP previsto para novembro de 2026. Entre na lista de espera para acompanhar.</p></details>
+  </div>
+</section>
+
+<section id="contato" class="contact">
+  <div class="wrap cgrid">
+    <div>
+      <h2>Entre na lista de espera</h2>
+      <p class="lead">Seja uma das primeiras famílias ou instituições a testar o ECOs em Sergipe. Avisaremos quando o piloto começar.</p>
+    </div>
+    <form id="form" novalidate>
+      <label>Seu nome<input type="text" id="nome" autocomplete="name" required></label>
+      <label>Seu e-mail<input type="email" id="email" autocomplete="email" required></label>
+      <label>Você é<select id="perfil"><option value="familia">Familiar ou cuidador de um idoso</option><option value="instituicao">Representante de clínica ou casa de repouso</option><option value="outro">Outro interesse</option></select></label>
+      <label>Mensagem (opcional)<textarea id="msg" rows="3"></textarea></label>
+      <label class="check"><input type="checkbox" id="lgpd">Autorizo o uso dos meus dados apenas para contato sobre o ECOs, conforme a LGPD.</label>
+      <div class="err" id="err" role="alert"></div>
+      <button class="btn btn-sun" type="submit">Entrar na lista de espera</button>
+      <div class="ok" id="ok" role="status">Cadastro recebido. Obrigado por acompanhar o ECOs!</div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div><b>ECOs: Ressoando Memórias e Afetos</b><br>Projeto Integrador de Silver Economy e HealthTech<br>
+      <!-- Para incluir a logo: <img src="logo-uninassau.png" alt="UNINASSAU" height="40"> -->
+    </div>
+    <div>UNINASSAU Aracaju<br>Análise e Desenvolvimento de Sistemas<br>1º MVP Tópicos Integradores, Edital nº 02/2026</div>
+  </div>
+</footer>
+
+<script>
+// Para receber os cadastros de verdade, crie um formulário gratuito (por exemplo, no Formspree)
+// e cole o endereço dele aqui. Sem endereço, o site apenas mostra a confirmação.
+const FORM_ENDPOINT = "";
+
+const f = document.getElementById("form"), err = document.getElementById("err"), ok = document.getElementById("ok");
+f.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  ok.style.display = "none";
+  const nome = f.nome.value.trim(), email = f.email.value.trim();
+  if (nome.length < 2) return err.textContent = "Informe seu nome.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return err.textContent = "Informe um e-mail válido, como nome@exemplo.com.";
+  if (!f.lgpd.checked) return err.textContent = "Marque a autorização para continuar.";
+  err.textContent = "";
+  const dados = { nome, email, perfil: f.perfil.value, mensagem: f.msg.value.trim() };
+  try {
+    if (FORM_ENDPOINT) {
+      const r = await fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(dados) });
+      if (!r.ok) throw new Error();
+    }
+    f.reset();
+    ok.style.display = "block";
+  } catch (_) {
+    err.textContent = "Não foi possível enviar agora. Tente novamente em instantes.";
+  }
+});
+</script>
+</body>
+</html>
